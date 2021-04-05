@@ -2,15 +2,15 @@ import path from 'path';
 import HtmlWebPackPlugin from 'html-webpack-plugin';
 
 const htmlPlugin = new HtmlWebPackPlugin({
-  template: path.join(__dirname, "client/index.html"), 
-  filename: "./index.html"
+  template: path.join(__dirname, 'client/index.html'),
+  filename: './index.html',
 });
 
 export default {
-  entry: './client/index.js',
+  entry: './client/index.jsx',
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: "fraud-app-detection.js",
+    filename: 'fraud-app-detection.js',
   },
   devtool: 'inline-source-map',
   mode: 'development',
@@ -20,9 +20,9 @@ export default {
       test: /\.jsx?$/,
       exclude: /node_modules/,
       use: {
-        loader: "babel-loader",
+        loader: 'babel-loader',
         options: {
-          presets: ['@babel/preset-env', '@babel/preset-react']
+          presets: ['@babel/preset-env', '@babel/preset-react'],
         },
       },
     }, {
@@ -30,15 +30,15 @@ export default {
       use: ['style-loader', 'css-loader', 'sass-loader'],
     }, {
       test: /\.(png|svg|jpg|gif)$/,
-      loader: "file-loader",
-      options: { name: '/static/[name].[ext]' }
+      loader: 'file-loader',
+      options: { name: '/static/[name].[ext]' },
     }, {
       test: /\.tsx?$/,
       use: 'ts-loader',
       exclude: /node_modules/,
-    }]
+    }],
   },
   resolve: {
-    extensions: ['.js', '.ts', '.tsx']
-  }
-}
+    extensions: ['.js', '.jsx', '.ts', '.tsx'],
+  },
+};
