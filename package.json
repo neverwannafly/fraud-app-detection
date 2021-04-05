@@ -5,7 +5,8 @@
   "author": "Shubham Anand",
   "license": "MIT",
   "scripts": {
-    "server": "nodemon --watch server --exec babel-node -- server/index.js"
+    "server": "nodemon --watch server --exec babel-node -- server/index.js",
+    "db": "mongod --dbpath ./data/db/"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",
@@ -15,6 +16,7 @@
     "@babel/preset-react": "^7.10.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^3.6.0",
+    "eslint": "^5.16.0",
     "file-loader": "^6.0.0",
     "html-webpack-plugin": "^4.3.0",
     "node-sass": "^4.14.1",
@@ -28,8 +30,12 @@
     "webpack-dev-middleware": "^3.7.2"
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-react": "^7.21.5",
     "express": "^4.17.1",
     "history": "^5.0.0",
+    "mongoose": "^5.12.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
