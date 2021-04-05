@@ -5,6 +5,11 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackConfig from '../webpack.config.dev'
 
+import database from './database';
+
+const connection = database.getConnection();
+connection.once('open', () => console.log('connected to database!'));
+
 const app = express();
 const port = process.env.PORT || 6767;
 
