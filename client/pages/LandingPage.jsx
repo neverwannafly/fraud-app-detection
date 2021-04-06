@@ -19,7 +19,7 @@ function LandingPage() {
           className="m-v-5"
           variant="outlined"
           color="primary"
-          onClick={navigateTo('/dashboard')}
+          onClick={navigateTo('/discover')}
         >
           Search Database
         </Button>
