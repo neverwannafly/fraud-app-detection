@@ -34,7 +34,7 @@ function LandingPage() {
           deMystify.app
         </div>
         <div className="landing__sub-title">
-          Unmasking fradulent apps
+          Unmasking fradulent applications
         </div>
         <div className="landing__body">
           <div className="landing__description">
