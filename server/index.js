@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import express from 'express';
-import path from 'path';
 
 import webpack from 'webpack';
-import webpackMiddleware from 'webpack-dev-middleware';
+import middleware from 'webpack-dev-middleware';
+import history from 'connect-history-api-fallback';
 import webpackConfig from '../webpack.config.dev';
 
 import database from './database';
@@ -14,13 +14,13 @@ connection.once('open', () => console.log('connected to database!'));
 const app = express();
 const port = process.env.PORT || 6767;
 
-const distDirectory = path.join(__dirname, '../dist');
-const htmlFile = path.join(distDirectory, 'index.html');
+const compiler = webpack(webpackConfig);
 
-app.use(webpackMiddleware(webpack(webpackConfig)));
-
-app.get('/', (_, res) => {
-  res.sendFile(htmlFile);
-});
+app.use(history());
+app.use(
+  middleware(compiler, {
+    publicPath: '/',
+  }),
+);
 
 app.listen(port, () => console.log(`Listening on: http://localhost:${port}`));
