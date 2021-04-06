@@ -2,4 +2,27 @@
 
 body, html {
   font-family: 'Roboto';
+  margin: 0;
+}
+
+#root {
+  height: 100vh;
+}
+
+.sr-container {
+  max-width: $max-width;
+  margin: 0rem auto;
+  padding: 0 $page-padding;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.m-v-5 {
+  margin: 0.5rem 0!important;
 }
