@@ -1,8 +1,7 @@
 import { spawn } from 'child_process';
 import path from 'path';
-import apis from './api';
 
-export function bindApisToApp(app) {
+export function bindApisToApp(app, apis) {
   apis.forEach((api) => {
     const [type, apiInfo] = api;
     const [urlPath, action] = apiInfo;

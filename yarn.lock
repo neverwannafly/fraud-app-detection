@@ -2942,6 +2942,11 @@ es-to-primitive@^1.2.1:
     is-date-object "^1.0.1"
     is-symbol "^1.0.2"
 
+es6-promisify@^6.0.0:
+  version "6.1.1"
+  resolved "https://registry.yarnpkg.com/es6-promisify/-/es6-promisify-6.1.1.tgz#46837651b7b06bf6fff893d03f29393668d01621"
+  integrity sha512-HBL8I3mIki5C1Cc9QjKUenHtnG0A5/xA8Q/AllRcfiwl2CZFXGK7ddBiCoRwAix4i2KxcQfjtIVcrVbB3vbmwg==
+
 escalade@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.1.1.tgz#d8cfdc7000965c5a0174b4a82eaa5c0552742e40"
@@ -3980,6 +3985,11 @@ http-signature@~1.2.0:
     assert-plus "^1.0.0"
     jsprim "^1.2.2"
     sshpk "^1.7.0"
+
+httpreq@^0.4.24:
+  version "0.4.24"
+  resolved "https://registry.yarnpkg.com/httpreq/-/httpreq-0.4.24.tgz#4335ffd82cd969668a39465c929ac61d6393627f"
+  integrity sha1-QzX/2CzZaWaKOUZckprGHWOTYn8=
 
 https-browserify@^1.0.0:
   version "1.0.0"
@@ -6602,6 +6612,14 @@ scss-tokenizer@^0.2.3:
   dependencies:
     js-base64 "^2.1.8"
     source-map "^0.4.2"
+
+searchitunes@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/searchitunes/-/searchitunes-2.4.0.tgz#69edf965f0998fabd8e21dcb2d50202fa3090bfe"
+  integrity sha512-qV/vFq7ILi5vr9GRnUlv6nTioMFv8QQnxObyeVKbme5MRFiMaO2Eq2ISxQxX2AdI+jgMy0QvgE1DIRoSB4zV1w==
+  dependencies:
+    es6-promisify "^6.0.0"
+    httpreq "^0.4.24"
 
 semver-diff@^3.1.1:
   version "3.1.1"

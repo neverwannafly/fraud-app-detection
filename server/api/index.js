@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-cycle
 import requestAnalysis from './requestAnalysis';
 import discover from './discover';
 

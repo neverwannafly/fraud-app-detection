@@ -1,5 +1,5 @@
+import searchItunes from 'searchitunes';
 import jobManager from '../jobManager';
-import { callPythonScript } from '../utils';
 
 function requestAnalysis(req, res) {
   const parseRegex = /id[0-9]+/;
@@ -8,14 +8,25 @@ function requestAnalysis(req, res) {
     .match(parseRegex)[0]
     .slice(2);
 
-  callPythonScript('app_store_review.py', [appId]).then((arr) => console.log(arr));
+  // If appId not present in db
+  searchItunes({ id: appId }).then((app) => (
+    {
+      appUrl: app.artworkUrl512,
+      ratingCount: app.userRatingCount,
+      genres: app.genres,
+      developer: app.artistName,
+      name: app.trackName,
+      ratings: app.averageUserRating,
+      link: app.trackViewUrl,
+    }
+  ));
 
   res.send({
     success: true,
     hasAnalysisReady: false,
   });
 
-  jobManager.enqueueJob();
+  jobManager.enqueueJob(appId);
 }
 
 export default [
