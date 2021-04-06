@@ -1,7 +1,7 @@
 import searchItunes from 'searchitunes';
 import jobManager from '../jobManager';
 
-import { App } from '../models';
+import { App, Analysis } from '../models';
 
 async function requestAnalysis(req, res) {
   const parseRegex = /id[0-9]+/;
@@ -12,26 +12,32 @@ async function requestAnalysis(req, res) {
 
   const appObject = await App.findOne({ appId });
   if (!appObject) {
-    searchItunes({ id: appId })
-      .then((app) => {
-        App.create({
-          appId,
-          image: app.artworkUrl512,
-          ratingCount: app.userRatingCount,
-          genres: app.genres,
-          developer: app.artistName,
-          name: app.trackName,
-          ratings: app.averageUserRating,
-          link: app.trackViewUrl,
-        }, (cerr) => {
-          if (cerr) return;
-          jobManager.enqueueJob(appId);
-          res.send({ appId, success: true });
-        });
-      })
-      .catch(() => res.send({ success: false }));
+    try {
+      const app = await searchItunes({ id: appId });
+      await App.create({
+        appId,
+        image: app.artworkUrl512,
+        ratingCount: app.userRatingCount,
+        genres: app.genres,
+        developer: app.artistName,
+        name: app.trackName,
+        ratings: app.averageUserRating,
+        link: app.trackViewUrl,
+      });
+      await Analysis.create({ appId });
+
+      jobManager.enqueueJob(appId);
+      res.send({ appId, success: true });
+    } catch (err) {
+      res.send({ success: false });
+    }
   } else {
-    res.send({ appId, success: true, analysisReady: true });
+    const analysis = await Analysis.findOne({ appId });
+    if (analysis) {
+      res.send({ appId, success: true, analysisReady: true });
+    } else {
+      res.send({ appId, success: true });
+    }
   }
 }
 

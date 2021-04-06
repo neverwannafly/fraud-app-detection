@@ -23,7 +23,7 @@ export default {
         });
       }
 
-      Review.collection.insert(reviewObjects, (err) => {
+      Review.insertMany(reviewObjects, (err) => {
         if (err) jobStatus = false;
       });
 

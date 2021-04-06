@@ -41,7 +41,7 @@ def get_reviews(app_id, page=1) -> typing.List[dict]:
         "title": entry.get('title').get('label'),
         "author": entry.get('author').get('name').get('label'),
         "rating": entry.get('im:rating').get('label'),
-        "review": entry.get('content').get('label'),
+        "content": entry.get('content').get('label'),
         "voteCount": entry.get('im:voteCount').get('label'),
         "page": page
       } for entry in data_feed.get('entry') if not entry.get('im:name')]
