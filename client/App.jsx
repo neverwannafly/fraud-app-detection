@@ -13,9 +13,17 @@ const App = () => (
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/notfound" component={NotFound} />
-        <Redirect to="/notfound" />
+        <Route
+          component={Landing}
+          exact
+          path="/"
+        />
+        <Route
+          component={NotFound}
+          exact
+          path="/404"
+        />
+        <Redirect to="/404" />
       </Switch>
     </Router>
   </Provider>

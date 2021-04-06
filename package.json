@@ -34,9 +34,10 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.11.3",
+    "connect-history-api-fallback": "^1.6.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "history": "^5.0.0",
+    "history": "^4.10.1",
     "mongoose": "^5.12.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
