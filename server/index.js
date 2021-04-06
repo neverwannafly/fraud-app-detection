@@ -6,6 +6,7 @@ import middleware from 'webpack-dev-middleware';
 import history from 'connect-history-api-fallback';
 import webpackConfig from '../webpack.config.dev';
 
+import { bindApisToApp, availableRoutes } from './utils';
 import database from './database';
 
 const connection = database.getConnection();
@@ -22,5 +23,10 @@ app.use(
     publicPath: '/',
   }),
 );
+app.use(express.urlencoded({ extended: true }));
+
+// Register all routes
+bindApisToApp(app);
+console.log(availableRoutes(app));
 
 app.listen(port, () => console.log(`Listening on: http://localhost:${port}`));
