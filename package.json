@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "server": "nodemon --watch server --exec babel-node -- server/index.js",
-    "db": "mongod --dbpath ./data/db/"
+    "db": "mongod --dbpath ./data/db/",
+    "migrate": "mongo < migrations.db"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.1",

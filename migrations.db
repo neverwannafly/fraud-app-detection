@@ -1,0 +1,6 @@
+use fraud-app-detection
+db.reviews.createIndex({ reviewId: 1, appId: 1 }, { unique: true })
+db.reviews.createIndex({ appId: 1 })
+db.reviews.createIndex({ reviewId: 1 })
+db.analyses.createIndex({ appId: 1 })
+db.apps.createIndex({ appId: 1 });
