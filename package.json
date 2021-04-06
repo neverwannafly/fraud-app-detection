@@ -33,6 +33,7 @@
     "webpack-cli": "^3.3.11"
   },
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "history": "^5.0.0",
