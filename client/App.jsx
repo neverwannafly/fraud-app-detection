@@ -5,8 +5,8 @@ import {
 import { Provider } from 'react-redux';
 
 import history from './history';
-import Landing from './pages/Landing';
-import NotFound from './pages/NotFound';
+import LandingPage from './pages/LandingPage';
+import NotFoundPage from './pages/NotFoundPage';
 import store from './store';
 
 const App = () => (
@@ -14,12 +14,12 @@ const App = () => (
     <Router history={history}>
       <Switch>
         <Route
-          component={Landing}
+          component={LandingPage}
           exact
           path="/"
         />
         <Route
-          component={NotFound}
+          component={NotFoundPage}
           exact
           path="/404"
         />
