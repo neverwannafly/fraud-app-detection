@@ -5,17 +5,25 @@ import {
 import { Provider } from 'react-redux';
 
 import history from './history';
-import Landing from './pages/Landing';
-import NotFound from './pages/NotFound';
+import LandingPage from './pages/LandingPage';
+import NotFoundPage from './pages/NotFoundPage';
 import store from './store';
 
 const App = () => (
   <Provider store={store}>
     <Router history={history}>
       <Switch>
-        <Route exact path="/" component={Landing} />
-        <Route exact path="/notfound" component={NotFound} />
-        <Redirect to="/notfound" />
+        <Route
+          component={LandingPage}
+          exact
+          path="/"
+        />
+        <Route
+          component={NotFoundPage}
+          exact
+          path="/404"
+        />
+        <Redirect to="/404" />
       </Switch>
     </Router>
   </Provider>

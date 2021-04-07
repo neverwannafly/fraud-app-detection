@@ -1,0 +1,52 @@
+.landing {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: $light-background-color;
+
+  &__box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: $page-padding;
+    height: 80%;
+    background-color: $background-color;
+  }
+
+  &__body {
+    padding: 2rem;
+    background-color: $light-background-color;
+    color: $primary-font-color;
+    margin: 2rem;
+  }
+
+  &__description {
+    width: 75%;
+    font-size: 1.2rem;
+    text-align: center;
+    margin: 1rem auto;
+  }
+
+  &__title {
+    font-size: 4rem;
+    font-weight: bolder;
+    margin: 0.5rem;
+    color: $heading-color;
+  }
+
+  &__sub-title {
+    font-size: 1.5rem;
+    color: $light-heading-color;
+  }
+
+  &__cta {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    margin: 0.5rem auto;
+  }
+}

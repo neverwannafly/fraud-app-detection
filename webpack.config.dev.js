@@ -40,5 +40,8 @@ export default {
   },
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx'],
+    alias: {
+      '@app': path.resolve(__dirname, 'client/'),
+    },
   },
 };

@@ -19,5 +19,14 @@
         "react"
     ],
     "rules": {
+    },
+    "settings": {
+        "import/resolver": {
+          "alias": {
+            "map": [
+              ["@app", "./client"]
+            ]
+          }
+        }
     }
 }
