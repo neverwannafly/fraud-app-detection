@@ -1,0 +1,30 @@
+.form-control {
+  display: block;
+  padding: 1rem;
+}
+
+.form-input {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  
+  .MuiFormControl-root {
+    &:last-child {
+      width: 45%!important;
+    }
+
+    &:first-child {
+      width: 45%!important;
+    }
+  }
+}
+
+.no-margin {
+  margin: 0!important;
+}

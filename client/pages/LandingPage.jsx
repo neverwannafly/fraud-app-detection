@@ -1,9 +1,107 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector, shallowEqual } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 
-import { navigateTo } from '@app/utils';
+import {
+  navigateTo, toast, apiRequest, validators,
+} from '@app/utils';
+import { Navbar, Modal } from '@app/components';
 
 function LandingPage() {
+  const { actualName } = useSelector((state) => state.users, shallowEqual);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    first_name: '',
+    last_name: '',
+    url: '',
+  });
+  const handleModalClose = () => setModalOpen(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleChange = (prop) => (event) => {
+    setFormData({ ...formData, [prop]: event.target.value });
+  };
+  const handleFormFailure = (error = 'Network Error') => {
+    toast.dispatchNotification(error, toast.ERROR_TOAST);
+  };
+  const handleFormSuccess = () => {
+    toast.dispatchNotification('Success', toast.SUCCESS_TOAST);
+  };
+  const handleSubmit = async () => {
+    try {
+      const response = await apiRequest('POST', '/request-analysis', {
+        ...formData,
+        actualName,
+      });
+      if (response.success) {
+        handleFormSuccess();
+      } else {
+        handleFormFailure(response.error);
+      }
+    } catch (error) {
+      handleFormFailure();
+    }
+  };
+
+  function formUi() {
+    return (
+      <form className="form-control" noValidate autoComplete="off">
+        <div className="form-header">
+          <h2>
+            Submit an Analysis Request
+          </h2>
+        </div>
+        <div className="form-input no-margin">
+          <div className="form-group">
+            <TextField
+              required
+              error={!validators.isStringValid(formData.first_name)}
+              label="First Name"
+              variant="filled"
+              onChange={handleChange('first_name')}
+            />
+            <TextField
+              required
+              error={!validators.isStringValid(formData.last_name)}
+              label="Last Name"
+              variant="filled"
+              onChange={handleChange('last_name')}
+            />
+          </div>
+          <div className="form-input">
+            <TextField
+              required
+              error={!validators.isEmailValid(formData.email)}
+              label="Email"
+              variant="filled"
+              onChange={handleChange('email')}
+            />
+          </div>
+          <div className="form-input">
+            <TextField
+              required
+              label="App link"
+              variant="filled"
+              onChange={handleChange('url')}
+            />
+          </div>
+        </div>
+        <div className="form-actions">
+          <Button
+            size="medium"
+            variant="outlined"
+            color="primary"
+            className="landing__buttons"
+            onClick={handleSubmit}
+          >
+            Submit Request
+          </Button>
+        </div>
+      </form>
+    );
+  }
+
   function ctaUi() {
     return (
       <>
@@ -11,7 +109,7 @@ function LandingPage() {
           className="m-v-5"
           variant="contained"
           color="secondary"
-          onClick={navigateTo('/request-analysis')}
+          onClick={handleModalOpen}
         >
           Request Analysis
         </Button>
@@ -31,7 +129,7 @@ function LandingPage() {
     return (
       <>
         <div className="landing__title">
-          deMystify.app
+          DeMystify.io
         </div>
         <div className="landing__sub-title">
           Unmasking fradulent applications
@@ -62,9 +160,16 @@ function LandingPage() {
 
   return (
     <div className="landing">
+      <Navbar />
       <div className="sr-container landing__box">
         {mainUi()}
       </div>
+      <Modal
+        open={isModalOpen}
+        onClose={handleModalClose}
+      >
+        {formUi()}
+      </Modal>
     </div>
   );
 }

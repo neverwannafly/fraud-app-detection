@@ -1,10 +1,6 @@
 .landing {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  background-color: $light-background-color;
+  min-height: 100%;
+  background-color: $background-color;
 
   &__box {
     display: flex;
@@ -13,22 +9,31 @@
     align-items: center;
     text-align: center;
     padding: $page-padding;
-    height: 80%;
-    background-color: $background-color;
   }
 
   &__body {
     padding: 2rem;
     background-color: $light-background-color;
     color: $primary-font-color;
-    margin: 2rem;
+    margin: 2rem 0;
+    box-shadow:
+      0 2.8px 2.2px rgba(0, 0, 0, 0.034),
+      0 6.7px 5.3px rgba(0, 0, 0, 0.048),
+      0 12.5px 10px rgba(0, 0, 0, 0.06),
+      0 22.3px 17.9px rgba(0, 0, 0, 0.072),
+      0 41.8px 33.4px rgba(0, 0, 0, 0.086),
+      0 100px 80px rgba(0, 0, 0, 0.12)
   }
 
   &__description {
-    width: 75%;
     font-size: 1.2rem;
     text-align: center;
     margin: 1rem auto;
+    max-width: 600px;
+
+    @include mobile {
+      font-size: 1rem;
+    }
   }
 
   &__title {
@@ -36,17 +41,25 @@
     font-weight: bolder;
     margin: 0.5rem;
     color: $heading-color;
+
+    @include mobile {
+      font-size: 2rem;
+    }
   }
 
   &__sub-title {
     font-size: 1.5rem;
     color: $light-heading-color;
+
+    @include mobile {
+      font-size: 1.2rem;
+    }
   }
 
   &__cta {
     display: flex;
     flex-direction: column;
-    width: 30%;
     margin: 0.5rem auto;
+    max-width: 15rem;
   }
 }

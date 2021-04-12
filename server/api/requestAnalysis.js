@@ -43,6 +43,6 @@ async function requestAnalysis(req, res) {
 }
 
 export default [
-  '/request-ananlysis',
+  '/request-analysis',
   requestAnalysis,
 ];
