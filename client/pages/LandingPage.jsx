@@ -2,6 +2,7 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 
 import { navigateTo } from '@app/utils';
+import { Navbar } from '@app/components';
 
 function LandingPage() {
   function ctaUi() {
@@ -62,6 +63,7 @@ function LandingPage() {
 
   return (
     <div className="landing">
+      <Navbar />
       <div className="sr-container landing__box">
         {mainUi()}
       </div>
