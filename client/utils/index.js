@@ -1,2 +1,2 @@
-// eslint-disable-next-line import/prefer-default-export
 export { default as navigateTo } from './navigateTo';
+export { default as randomName } from './randomName';
