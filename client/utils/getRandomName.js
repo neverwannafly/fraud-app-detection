@@ -49,17 +49,15 @@ const RANDOM_NUMBER_LENGTH = 16;
 
 function randomProp(obj) {
   const keys = Object.keys(obj);
-  return obj[keys[Math.floor(keys.length * Math.random())]];
+  return keys[Math.floor(keys.length * Math.random())];
 }
 
 function randomString(length = RANDOM_NUMBER_LENGTH) {
   const result = [];
-  const characters = `
-    ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789
-  `;
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
   const charactersLength = characters.length;
   for (let i = 0; i < length; i += 1) {
-    result.push(characters.charAt(Math.floor(Math.random() * charactersLength)));
+    result.push(characters.charAt(Math.ceil(Math.random() * charactersLength)));
   }
 
   return result.join('');
@@ -90,7 +88,7 @@ function getNameObject(localToken) {
   };
 }
 
-function randomName() {
+function getRandomName() {
   let localToken = JSON.parse(localStorage.getItem(LOCAL_STORAGE_CONSTANT));
   if (localToken === null) {
     localToken = generateRandomName();
@@ -100,4 +98,4 @@ function randomName() {
   return getNameObject(localToken);
 }
 
-export default randomName;
+export default getRandomName;

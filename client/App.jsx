@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import history from './history';
 import LandingPage from './pages/LandingPage';
 import NotFoundPage from './pages/NotFoundPage';
-import store from './store';
+import store from './store/index';
 
 const App = () => (
   <Provider store={store}>
