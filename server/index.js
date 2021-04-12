@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import express from 'express';
+import path from 'path';
 
 import webpack from 'webpack';
 import middleware from 'webpack-dev-middleware';
@@ -25,6 +26,7 @@ app.use(
   }),
 );
 app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../client/assets/icons')));
 
 // Register all routes
 bindApisToApp(app, apis);

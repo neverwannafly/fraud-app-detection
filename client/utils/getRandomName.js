@@ -83,7 +83,7 @@ function getNameObject(localToken) {
   return {
     displayName: `${colorProp} ${iconProp}`,
     actualName: `${colorProp}-${iconProp}-${uuid}`,
-    iconPath: `assets/icons/${iconPropValue}`,
+    iconPath: `${iconPropValue}`,
     color: colorPropValue,
   };
 }
