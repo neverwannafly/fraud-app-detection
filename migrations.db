@@ -1,4 +1,7 @@
 use fraud-app-detection
+db.createCollection('analyses')
+db.createCollection('apps')
+db.createCollection('reviews')
 db.reviews.createIndex({ reviewId: 1, appId: 1 }, { unique: true })
 db.reviews.createIndex({ appId: 1 })
 db.reviews.createIndex({ reviewId: 1 })

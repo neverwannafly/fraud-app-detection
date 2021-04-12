@@ -1,5 +1,10 @@
 import { Schema, model } from 'mongoose';
 
+const appTypes = {
+  ANDROID: 'ANDROID',
+  iOS: 'iOS',
+};
+
 const appSchema = new Schema({
   appId: String,
   image: String,
@@ -9,6 +14,14 @@ const appSchema = new Schema({
   developer: String,
   ratings: Number,
   link: String,
+  appType: {
+    type: String,
+    enum: appTypes,
+    default: appTypes.iOS,
+  },
 });
 
-export default model('App', appSchema);
+const appModel = model('App', appSchema);
+appModel.types = appTypes;
+
+export default appModel;
