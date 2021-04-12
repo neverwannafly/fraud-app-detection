@@ -5,13 +5,10 @@ const initialState = {
   actualName: '',
   iconPath: '',
   color: '',
+  ...getRandomName(),
 };
-const randomClient = getRandomName();
 
-export default function reducer(state = {
-  ...initialState,
-  ...randomClient,
-}, action) {
+export default function reducer(state = initialState, action) {
   switch (action.type) {
     default:
       return state;
