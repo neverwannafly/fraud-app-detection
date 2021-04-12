@@ -4,6 +4,8 @@ import {
 } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
+import { toast } from '@app/utils';
+
 import history from './history';
 import LandingPage from './pages/LandingPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -26,6 +28,7 @@ const App = () => (
         <Redirect to="/404" />
       </Switch>
     </Router>
+    <toast.ToastContainer />
   </Provider>
 );
 

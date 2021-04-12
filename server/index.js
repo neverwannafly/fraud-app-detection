@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import express from 'express';
 import path from 'path';
+import bodyParser from 'body-parser';
 
 import webpack from 'webpack';
 import middleware from 'webpack-dev-middleware';
@@ -26,6 +27,7 @@ app.use(
   }),
 );
 app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/assets/icons')));
 
 // Register all routes

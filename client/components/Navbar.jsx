@@ -4,11 +4,12 @@ import { useSelector, shallowEqual } from 'react-redux';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Avatar from '@material-ui/core/Avatar';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+
+import { useMobile } from '@app/hooks';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -19,6 +20,7 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: fade(theme.palette.common.white, 0.25),
     },
     marginLeft: 0,
+    marginRight: '2rem',
     width: '100%',
     [theme.breakpoints.up('sm')]: {
       marginLeft: theme.spacing(1),
@@ -54,41 +56,35 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
   const classes = useStyles();
+  const isMobile = useMobile();
 
   const {
     displayName, iconPath,
   } = useSelector((state) => state.users, shallowEqual);
 
   return (
-    <AppBar>
-      <Toolbar>
+    <AppBar position="sticky">
+      <Toolbar className="sr-container">
         <Typography style={{ flexGrow: 1 }} variant="h6">
-          Welcome&nbsp;
+          Hi&nbsp;
           {displayName}
         </Typography>
-        <div className={classes.search}>
-          <div className={classes.searchIcon}>
-            <SearchIcon />
+        {!isMobile && (
+          <div className={classes.search}>
+            <div className={classes.searchIcon}>
+              <SearchIcon />
+            </div>
+            <InputBase
+              placeholder="Look for Apps..."
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              inputProps={{ 'aria-label': 'search' }}
+            />
           </div>
-          <InputBase
-            placeholder="Look for Apps..."
-            classes={{
-              root: classes.inputRoot,
-              input: classes.inputInput,
-            }}
-            inputProps={{ 'aria-label': 'search' }}
-          />
-        </div>
-        <div>
-          <IconButton
-            aria-label="account of current user"
-            aria-controls="menu-appbar"
-            aria-haspopup="true"
-            color="inherit"
-          >
-            <Avatar alt="" src={iconPath} />
-          </IconButton>
-        </div>
+        )}
+        <Avatar alt="" src={iconPath} />
       </Toolbar>
     </AppBar>
   );

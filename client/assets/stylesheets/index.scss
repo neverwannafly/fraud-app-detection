@@ -2,5 +2,9 @@
 @import 'variables.scss';
 @import 'base.scss';
 
+// Libraries
+@import 'lib/toastify.scss';
+
 // Page styles
+@import 'form.scss';
 @import 'landing.scss';
