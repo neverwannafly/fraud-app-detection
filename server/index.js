@@ -9,6 +9,7 @@ import history from 'connect-history-api-fallback';
 import webpackConfig from '../webpack.config.dev';
 import apis from './api';
 
+import { port, address } from './constants';
 import { bindApisToApp, availableRoutes } from './utils';
 import database from './database';
 
@@ -16,7 +17,6 @@ const connection = database.getConnection();
 connection.once('open', () => console.log('connected to database!'));
 
 const app = express();
-const port = process.env.PORT || 6767;
 
 const compiler = webpack(webpackConfig);
 
@@ -34,4 +34,8 @@ app.use(express.static(path.join(__dirname, '../client/assets/icons')));
 bindApisToApp(app, apis);
 console.log(availableRoutes(app));
 
-app.listen(port, () => console.log(`Listening on: http://localhost:${port}`));
+app.listen(
+  port,
+  address,
+  () => console.log(`Listening on: http://${address}:${port}`),
+);

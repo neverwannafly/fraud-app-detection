@@ -18,7 +18,7 @@ const COLORS = {
 };
 const ICONS = {
   Bear: 'bear.png',
-  BlackJaguar: 'black-jaguar.png',
+  Panther: 'black-jaguar.png',
   Bream: 'bream.png',
   Bull: 'bull.png',
   Butterfly: 'butterfly.png',
