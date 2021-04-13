@@ -10,11 +10,16 @@ const apiRequest = async (method, url, body = null) => {
     method,
     headers: { 'Content-Type': 'application/json' },
   };
-  if (method !== 'GET') {
+  let reqUrl = `${url}?`;
+  if (method === 'GET') {
+    Object.keys(body).forEach((key) => {
+      reqUrl += `${key}=${body[key]}&`;
+    });
+  } else {
     payload = { ...payload, body: JSON.stringify(body) };
   }
   try {
-    const data = await fetch(url, payload);
+    const data = await fetch(reqUrl, payload);
     return parseJsonResponse(data);
   } catch (err) {
     return dispatchNetworkError();

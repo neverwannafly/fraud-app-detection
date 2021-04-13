@@ -20,6 +20,10 @@ const app = express();
 
 const compiler = webpack(webpackConfig);
 
+// Register all routes
+bindApisToApp(app, apis);
+console.log(availableRoutes(app));
+
 app.use(history());
 app.use(
   middleware(compiler, {
@@ -29,10 +33,6 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/assets/icons')));
-
-// Register all routes
-bindApisToApp(app, apis);
-console.log(availableRoutes(app));
 
 app.listen(
   port,
