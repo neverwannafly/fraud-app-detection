@@ -8,6 +8,7 @@ import { toast } from '@app/utils';
 
 import history from './history';
 import LandingPage from './pages/LandingPage';
+import DiscoverPage from './pages/DiscoverPage';
 import NotFoundPage from './pages/NotFoundPage';
 import store from './store/index';
 
@@ -20,6 +21,11 @@ const App = () => (
             component={LandingPage}
             exact
             path="/"
+          />
+          <Route
+            component={DiscoverPage}
+            exact
+            path="/discover"
           />
           <Route
             component={NotFoundPage}
