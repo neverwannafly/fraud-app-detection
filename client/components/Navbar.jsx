@@ -57,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar({ canGoBack }) {
+function Navbar({ canGoBack, canSearch, onSearch }) {
   const classes = useStyles();
   const isMobile = useMobile();
 
@@ -75,16 +75,19 @@ function Navbar({ canGoBack }) {
             className="pointer m-r-10"
           />
         )}
-        <Typography style={{ flexGrow: 1 }} variant="h6">
-          Hi&nbsp;
-          {displayName}
-        </Typography>
-        {!isMobile && (
+        {(!canSearch || !isMobile) && (
+          <Typography style={{ flexGrow: 1 }} variant="h6">
+            Hi&nbsp;
+            {displayName}
+          </Typography>
+        )}
+        {canSearch && (
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              onChange={onSearch}
               placeholder="Look for Apps..."
               classes={{
                 root: classes.inputRoot,
@@ -102,10 +105,14 @@ function Navbar({ canGoBack }) {
 
 Navbar.propTypes = {
   canGoBack: PropTypes.bool,
+  canSearch: PropTypes.bool,
+  onSearch: PropTypes.func,
 };
 
 Navbar.defaultProps = {
   canGoBack: false,
+  canSearch: false,
+  onSearch: () => {},
 };
 
 export default Navbar;

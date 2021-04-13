@@ -6,8 +6,10 @@
 @import 'lib/toastify.scss';
 
 // Components
-@import 'shimmer.scss';
+@import 'card.scss';
+@import 'form.scss';
+@import 'loader.scss';
 
 // Page styles
-@import 'form.scss';
 @import 'landing.scss';
+@import 'discover.scss';
