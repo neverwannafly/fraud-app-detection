@@ -12,12 +12,10 @@ export default {
   dispatchNotification: (text, type) => {
     const settings = {
       position: 'top-right',
-      autoClose: 5000,
+      autoClose: 2000,
       hideProgressBar: false,
-      closeOnClick: false,
+      closeOnClick: true,
       pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
     };
     switch (type) {
       case SUCCESS_TOAST: toast.success(text, settings); break;
@@ -29,14 +27,10 @@ export default {
   ToastContainer: () => (
     <ToastContainer
       position="top-right"
-      autoClose={5000}
-      hideProgressBar={false}
+      autoClose={2000}
       newestOnTop
-      closeOnClick={false}
+      closeOnClick
       rtl={false}
-      pauseOnFocusLoss
-      draggable
-      pauseOnHover
     />
   ),
 };

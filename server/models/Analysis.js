@@ -11,7 +11,6 @@ const analysisSchema = new Schema({
     of: String,
     default: {},
   },
-  requestedBy: [String],
   lastRequested: {
     type: Date,
     default: new Date(),

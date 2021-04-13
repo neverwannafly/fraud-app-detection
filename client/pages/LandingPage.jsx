@@ -32,7 +32,7 @@ function LandingPage() {
     try {
       const response = await apiRequest('POST', '/request-analysis', {
         ...formData,
-        actualName,
+        username: actualName,
       });
       if (response.success) {
         handleFormSuccess();

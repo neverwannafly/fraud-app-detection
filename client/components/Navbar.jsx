@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useSelector, shallowEqual } from 'react-redux';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -8,8 +9,10 @@ import Avatar from '@material-ui/core/Avatar';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import { useMobile } from '@app/hooks';
+import history from '@app/history';
 
 const useStyles = makeStyles((theme) => ({
   search: {
@@ -54,17 +57,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar() {
+function Navbar({ canGoBack }) {
   const classes = useStyles();
   const isMobile = useMobile();
 
   const {
     displayName, iconPath,
   } = useSelector((state) => state.users, shallowEqual);
+  const handleBackClick = () => history.push('');
 
   return (
     <AppBar position="sticky">
       <Toolbar className="sr-container">
+        { canGoBack && (
+          <ArrowBackIcon
+            onClick={handleBackClick}
+            className="pointer m-r-10"
+          />
+        )}
         <Typography style={{ flexGrow: 1 }} variant="h6">
           Hi&nbsp;
           {displayName}
@@ -89,5 +99,13 @@ function Navbar() {
     </AppBar>
   );
 }
+
+Navbar.propTypes = {
+  canGoBack: PropTypes.bool,
+};
+
+Navbar.defaultProps = {
+  canGoBack: false,
+};
 
 export default Navbar;
