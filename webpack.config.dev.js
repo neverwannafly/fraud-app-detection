@@ -31,7 +31,7 @@ export default {
     }, {
       test: /\.(png|svg|jpg|gif)$/,
       loader: 'file-loader',
-      options: { name: '/static/[name].[ext]' },
+      options: { name: './client/assets/icons/[name].[ext]' },
     }, {
       test: /\.tsx?$/,
       use: 'ts-loader',

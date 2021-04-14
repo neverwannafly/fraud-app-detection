@@ -10,3 +10,5 @@ export const workerConnectionDetails = {
   database: 0,
   namespace: 'demystify_app',
 };
+export const address = process.env.ADDRESS || 'localhost';
+export const port = process.env.PORT || 6767;

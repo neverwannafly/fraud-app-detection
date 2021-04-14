@@ -3,16 +3,21 @@
 body, html {
   font-family: 'Roboto';
   margin: 0;
+  height: 100%;
+  width: 100%;
+  background-color: $background-color;
 }
 
 #root {
-  height: 100vh;
+  height: 100%;
+  width: 100%;
 }
 
 .sr-container {
   max-width: $max-width;
   margin: 0rem auto;
   padding: 0 $page-padding;
+  width: calc(100% - 4rem);
 }
 
 .bold {
@@ -25,4 +30,91 @@ body, html {
 
 .m-v-5 {
   margin: 0.5rem 0!important;
+}
+
+.m-r-10 {
+  margin-right: 1rem!important;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+// Responsive
+
+$mobile-width: 480px;
+$tablet-width: 768px;
+$desktop-width: 1024px;
+$large-desktop-width: 1200px;
+
+@mixin bp($point) {
+  @media screen and (max-width: $point) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @include bp($mobile-width) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @include bp($tablet-width) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @include bp($desktop-width) {
+    @content;
+  }
+}
+
+@mixin tablet-only {
+  @media screen and (min-width: #{$mobile-width + 1px}) and (max-width: #{$tablet-width}) {
+    @content;
+  }
+}
+
+@mixin large-desktop-specific {
+  @media screen and (min-width: #{$desktop-width + 1px}) and (max-width: #{$large-desktop-width}) {
+    @content;
+  }
+}
+
+@mixin desktop-only {
+  @media screen and (min-width: #{$tablet-width + 1px}) and (max-width: #{$desktop-width}) {
+    @content;
+  }
+}
+
+@mixin large-desktop-only {
+  @media screen and (min-width: #{$desktop-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin above-mobile {
+  @media screen and (min-width: #{$mobile-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin above-tablet {
+  @media screen and (min-width: #{$tablet-width + 1px}) {
+    @content;
+  }
+}
+
+@mixin landscape-mobile {
+  @media screen and (max-width: #{$mobile-width}) and (orientation: landscape) {
+    @content;
+  }
+}
+
+@mixin portrait-mobile {
+  @media screen and (max-width: #{$mobile-width}) and (orientation: portrait) {
+    @content;
+  }
 }

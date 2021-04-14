@@ -12,6 +12,7 @@ class Database {
     this.client.connect(`mongodb://${dbServer}/${dbName}`, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     }).catch((err) => {
       console.error(`Database connection error\n${err}`);
     });

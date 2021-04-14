@@ -6,7 +6,7 @@ const analysisSchema = new Schema({
     type: Boolean,
     default: false,
   },
-  conetnt: {
+  analysisReports: {
     type: Map,
     of: String,
     default: {},
