@@ -17,6 +17,8 @@ const connection = database.getConnection();
 connection.once('open', () => console.log('connected to database!'));
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const compiler = webpack(webpackConfig);
 
@@ -30,8 +32,6 @@ app.use(
     publicPath: '/',
   }),
 );
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/assets/icons')));
 
 app.listen(

@@ -8,7 +8,7 @@ import { hasParams } from '../utils';
 
 async function captureUser(params) {
   const {
-    first_name: firstName, last_name: lastName, email, username,
+    firstName, lastName, email, username,
   } = params;
   const user = await User.findOne({ email }) || await User.create({
     name: `${firstName} ${lastName}`,
@@ -72,7 +72,7 @@ function getAppId(parans) {
 async function requestAnalysis(req, res) {
   const params = req.body;
 
-  if (!hasParams(params, ['url', 'first_name', 'last_name', 'email', 'username'])) {
+  if (!hasParams(params, ['url', 'firstName', 'lastName', 'email', 'username'])) {
     res.send({ success: false, error: 'Required fields empty' });
     return;
   }

@@ -1,26 +1,33 @@
-import React, { useState } from 'react';
-import { useSelector, shallowEqual } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 
 import {
   navigateTo, toast, apiRequest, validators,
 } from '@app/utils';
+import { changeUserData, loadUserData } from '@app/store/user';
 import { Navbar, Modal } from '@app/components';
 
 function LandingPage() {
-  const { actualName } = useSelector((state) => state.users, shallowEqual);
+  const {
+    actualName,
+    email,
+    firstName,
+    lastName,
+  } = useSelector((state) => state.users, shallowEqual);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(loadUserData());
+    console.log('hey');
+  }, []);
+
   const [isModalOpen, setModalOpen] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    first_name: '',
-    last_name: '',
-    url: '',
-  });
   const handleModalClose = () => setModalOpen(false);
   const handleModalOpen = () => setModalOpen(true);
   const handleChange = (prop) => (event) => {
-    setFormData({ ...formData, [prop]: event.target.value });
+    dispatch(changeUserData({ [prop]: event.target.value }));
   };
   const handleFormFailure = (error = 'Network Error') => {
     toast.dispatchNotification(error, toast.ERROR_TOAST);
@@ -31,8 +38,7 @@ function LandingPage() {
   const handleSubmit = async () => {
     try {
       const response = await apiRequest('POST', '/request-analysis', {
-        ...formData,
-        username: actualName,
+        email, firstName, lastName, username: actualName,
       });
       if (response.success) {
         handleFormSuccess();
@@ -56,25 +62,28 @@ function LandingPage() {
           <div className="form-group">
             <TextField
               required
-              error={!validators.isStringValid(formData.first_name)}
+              error={!validators.isStringValid(firstName)}
               label="First Name"
               variant="filled"
-              onChange={handleChange('first_name')}
+              defaultValue={firstName}
+              onChange={handleChange('firstName')}
             />
             <TextField
               required
-              error={!validators.isStringValid(formData.last_name)}
+              error={!validators.isStringValid(lastName)}
               label="Last Name"
               variant="filled"
-              onChange={handleChange('last_name')}
+              defaultValue={lastName}
+              onChange={handleChange('lastName')}
             />
           </div>
           <div className="form-input">
             <TextField
               required
-              error={!validators.isEmailValid(formData.email)}
+              error={!validators.isEmailValid(email)}
               label="Email"
               variant="filled"
+              defaultValue={email}
               onChange={handleChange('email')}
             />
           </div>

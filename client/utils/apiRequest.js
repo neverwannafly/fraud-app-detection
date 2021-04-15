@@ -5,7 +5,7 @@ const parseJsonResponse = async (data) => {
   return response;
 };
 
-const apiRequest = async (method, url, body = null) => {
+const apiRequest = async (method, url, body = {}) => {
   let payload = {
     method,
     headers: { 'Content-Type': 'application/json' },
