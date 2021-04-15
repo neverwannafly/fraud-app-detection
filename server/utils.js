@@ -70,3 +70,14 @@ export function hasParams(obj, params) {
   });
   return success;
 }
+
+export function decorateRoute(url, fn) {
+  return [
+    url,
+    (req, res) => {
+      // eslint-disable-next-line no-console
+      console.log(`Started ${req.method} : ${url}\n params: ${JSON.stringify({ ...req.body, ...req.query }, null, 2)}`);
+      fn(req, res);
+    },
+  ];
+}

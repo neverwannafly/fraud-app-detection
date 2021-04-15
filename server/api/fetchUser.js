@@ -1,5 +1,5 @@
 import { User } from '../models';
-import { hasParams } from '../utils';
+import { hasParams, decorateRoute } from '../utils';
 
 async function fetchUser(req, res) {
   const params = req.query;
@@ -22,6 +22,4 @@ async function fetchUser(req, res) {
   res.send({ email, firstName, lastName });
 }
 
-export default [
-  '/fetch-user', fetchUser,
-];
+export default decorateRoute('/fetch-user', fetchUser);

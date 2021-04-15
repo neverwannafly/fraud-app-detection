@@ -1,7 +1,7 @@
 import {
   App, Analysis, UserAnalysis, User,
 } from '../models';
-import { hasParams } from '../utils';
+import { hasParams, decorateRoute } from '../utils';
 
 async function discover(req, res) {
   const params = req.query;
@@ -44,6 +44,4 @@ async function discover(req, res) {
   });
 }
 
-export default [
-  '/discover-apps', discover,
-];
+export default decorateRoute('/discover-apps', discover);

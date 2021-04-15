@@ -4,7 +4,7 @@ import jobManager from '../jobManager';
 import {
   App, Analysis, User, UserAnalysis,
 } from '../models';
-import { hasParams } from '../utils';
+import { hasParams, decorateRoute } from '../utils';
 
 async function captureUser(params) {
   const {
@@ -103,7 +103,4 @@ async function requestAnalysis(req, res) {
   }
 }
 
-export default [
-  '/request-analysis',
-  requestAnalysis,
-];
+export default decorateRoute('/request-analysis', requestAnalysis);
