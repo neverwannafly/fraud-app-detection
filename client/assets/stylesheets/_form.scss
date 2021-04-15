@@ -6,13 +6,18 @@
 .form-input {
   display: flex;
   flex-direction: column;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+}
+
+.form-header {
+  text-align: center;
 }
 
 .form-group {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 0.5rem 0;
   
   .MuiFormControl-root {
     &:last-child {
@@ -23,6 +28,12 @@
       width: 45%!important;
     }
   }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
 }
 
 .no-margin {

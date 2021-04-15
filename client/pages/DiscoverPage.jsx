@@ -1,9 +1,16 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import { loadApplications, changeQuery } from '@app/store/application';
-import { Navbar, Loader, Card } from '@app/components';
+import {
+  Navbar,
+  Loader,
+  Card,
+  RequestAnalysis,
+} from '@app/components';
 import { debounce } from '@app/utils';
 
 function DiscoverPage() {
@@ -15,6 +22,10 @@ function DiscoverPage() {
   } = useSelector((state) => state.applications, shallowEqual);
   const { actualName: username } = useSelector((state) => state.users, shallowEqual);
   const dispatch = useDispatch();
+
+  const [isOpen, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   useEffect(() => {
     dispatch(loadApplications({ username }));
@@ -98,9 +109,20 @@ function DiscoverPage() {
     }
 
     return (
-      <div className="discover__content">
-        {cardUi()}
-      </div>
+      <>
+        <div className="discover__content">
+          {cardUi()}
+        </div>
+        <div className="discover__fab">
+          <Fab
+            color="primary"
+            aria-label="add"
+            onClick={handleOpen}
+          >
+            <AddIcon />
+          </Fab>
+        </div>
+      </>
     );
   }
 
@@ -114,6 +136,10 @@ function DiscoverPage() {
       <div className="discover__box sr-container">
         {contentUi()}
       </div>
+      <RequestAnalysis
+        isOpen={isOpen}
+        onClose={handleClose}
+      />
     </div>
   );
 }
