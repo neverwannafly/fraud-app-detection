@@ -14,12 +14,14 @@ function Card({
   analysis,
   requestCount,
   isRequestedByClient,
+  isFlat,
 }) {
   const {
     image, name, genres, link, appId,
   } = app;
   const { isFinished } = analysis;
-  const isPlural = requestCount > 1;
+  const isPlural = requestCount && requestCount > 1;
+  const cardClass = `card ${isFlat ? 'flat' : ''}`;
 
   const handleLinkOpen = () => {
     const resp = confirm(`This will open ${link} in a new window, continue?`);
@@ -63,7 +65,7 @@ function Card({
   }
 
   return (
-    <div className="card">
+    <div className={cardClass}>
       <div className="card__container">
         <div className="card__top">
           <div className="card__icon">
@@ -85,12 +87,14 @@ function Card({
           </div>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className="card__requesters">
-            {requestCount}
-            {isPlural ? ' people' : ' person'}
-            {isPlural ? ' have ' : ' has '}
-            requested an analysis.
-          </div>
+          {requestCount && (
+            <div className="card__requesters">
+              {requestCount}
+              {isPlural ? ' people' : ' person'}
+              {isPlural ? ' have ' : ' has '}
+              requested an analysis.
+            </div>
+          )}
           <div className="card__row--sm" />
           <div className="card__bottom">
             {analysisUi()}
@@ -111,8 +115,15 @@ function Card({
 Card.propTypes = {
   app: PropTypes.object.isRequired,
   analysis: PropTypes.object.isRequired,
-  requestCount: PropTypes.number.isRequired,
-  isRequestedByClient: PropTypes.bool.isRequired,
+  requestCount: PropTypes.number,
+  isRequestedByClient: PropTypes.bool,
+  isFlat: PropTypes.bool,
+};
+
+Card.defaultProps = {
+  requestCount: null,
+  isRequestedByClient: true,
+  isFlat: true,
 };
 
 export default Card;

@@ -10,6 +10,7 @@ import {
 } from '@app/utils';
 import { changeUserData, loadUserData } from '@app/store/user';
 import Modal from './Modal';
+import Card from './Card';
 
 function RequestAnalysis({ isOpen, onClose }) {
   const {
@@ -25,6 +26,7 @@ function RequestAnalysis({ isOpen, onClose }) {
   }, []);
 
   const [url, setUrl] = useState('');
+  const [appData, setAppData] = useState({});
   const [isSubmitted, setSubmitted] = useState(false);
 
   const handleModalClose = () => {
@@ -50,6 +52,7 @@ function RequestAnalysis({ isOpen, onClose }) {
       });
       if (response.success) {
         handleFormSuccess();
+        setAppData(response.data);
         setSubmitted(true);
       } else {
         handleFormFailure(response.error);
@@ -121,15 +124,31 @@ function RequestAnalysis({ isOpen, onClose }) {
   }
 
   function submittedUI() {
+    const { app, analysis } = appData;
     return (
-      <div className="form-header">
-        <h2>
-          Your request has been submitted!
-        </h2>
-        <h4>
-          You&apos;ll get an email informing when the analysis is complete.
-        </h4>
-      </div>
+      <>
+        <div className="form-header">
+          <h2>
+            Your request has been submitted!
+          </h2>
+          <p>
+            We will send you a report by email once your analysis
+            is ready.
+          </p>
+        </div>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <Card
+            app={app}
+            analysis={analysis}
+            isFlat={false}
+          />
+        </div>
+      </>
     );
   }
 
