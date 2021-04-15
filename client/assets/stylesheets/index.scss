@@ -5,6 +5,11 @@
 // Libraries
 @import 'lib/toastify.scss';
 
-// Page styles
+// Components
+@import 'card.scss';
 @import 'form.scss';
+@import 'loader.scss';
+
+// Page styles
 @import 'landing.scss';
+@import 'discover.scss';

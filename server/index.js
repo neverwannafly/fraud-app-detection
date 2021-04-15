@@ -17,8 +17,14 @@ const connection = database.getConnection();
 connection.once('open', () => console.log('connected to database!'));
 
 const app = express();
+app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 const compiler = webpack(webpackConfig);
+
+// Register all routes
+bindApisToApp(app, apis);
+console.log(availableRoutes(app));
 
 app.use(history());
 app.use(
@@ -26,13 +32,7 @@ app.use(
     publicPath: '/',
   }),
 );
-app.use(express.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/assets/icons')));
-
-// Register all routes
-bindApisToApp(app, apis);
-console.log(availableRoutes(app));
 
 app.listen(
   port,

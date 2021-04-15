@@ -4,11 +4,11 @@ import jobManager from '../jobManager';
 import {
   App, Analysis, User, UserAnalysis,
 } from '../models';
-import { hasParams } from '../utils';
+import { hasParams, decorateRoute } from '../utils';
 
 async function captureUser(params) {
   const {
-    first_name: firstName, last_name: lastName, email, username,
+    firstName, lastName, email, username,
   } = params;
   const user = await User.findOne({ email }) || await User.create({
     name: `${firstName} ${lastName}`,
@@ -39,18 +39,19 @@ async function createAnalysis(appId, params, analysis = null) {
 }
 
 async function createApp(appId, params) {
-  const app = await searchItunes({ id: appId });
-  await App.create({
+  const application = await searchItunes({ id: appId });
+  const app = await App.create({
     appId,
-    image: app.artworkUrl512,
-    ratingCount: app.userRatingCount,
-    genres: app.genres,
-    developer: app.artistName,
-    name: app.trackName,
-    ratings: app.averageUserRating,
-    link: app.trackViewUrl,
+    image: application.artworkUrl512,
+    ratingCount: application.userRatingCount,
+    genres: application.genres,
+    developer: application.artistName,
+    name: application.trackName,
+    ratings: application.averageUserRating,
+    link: application.trackViewUrl,
   });
-  await createAnalysis(appId, params);
+  const analysis = await createAnalysis(appId, params);
+  return { app, analysis };
 }
 
 function getAppId(parans) {
@@ -72,7 +73,7 @@ function getAppId(parans) {
 async function requestAnalysis(req, res) {
   const params = req.body;
 
-  if (!hasParams(params, ['url', 'first_name', 'last_name', 'email', 'username'])) {
+  if (!hasParams(params, ['url', 'firstName', 'lastName', 'email', 'username'])) {
     res.send({ success: false, error: 'Required fields empty' });
     return;
   }
@@ -86,8 +87,8 @@ async function requestAnalysis(req, res) {
   const appObject = await App.findOne({ appId });
   if (!appObject) {
     try {
-      createApp(appId, params);
-      res.send({ appId, success: true });
+      const data = await createApp(appId, params);
+      res.send({ data, success: true });
     } catch (err) {
       res.send({ success: false, error: err });
     }
@@ -95,15 +96,17 @@ async function requestAnalysis(req, res) {
     const analysis = await Analysis.findOne({ appId });
     await createAnalysis(appId, params, analysis);
     const { isFinished } = analysis;
+    const data = {
+      app: appObject,
+      analysis,
+    };
+
     if (isFinished) {
-      res.send({ appId, success: true, analysisReady: true });
+      res.send({ success: true, data, analysisReady: true });
     } else {
-      res.send({ appId, success: true });
+      res.send({ data, success: true });
     }
   }
 }
 
-export default [
-  '/request-analysis',
-  requestAnalysis,
-];
+export default decorateRoute('/request-analysis', requestAnalysis);
