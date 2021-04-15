@@ -4,10 +4,13 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+import { shallowEqual, useDispatch, useSelector } from 'react-redux';
+
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
 import history from '@app/history';
+import { toast } from '@app/utils';
 
 function Card({
   app,
@@ -22,6 +25,37 @@ function Card({
   const { isFinished } = analysis;
   const isPlural = requestCount && requestCount > 1;
   const cardClass = `card ${isFlat ? 'flat' : ''}`;
+
+  const {
+    actualName,
+    email,
+    firstName,
+    lastName,
+  } = useSelector((state) => state.users, shallowEqual);
+  const dispatch = useDispatch();
+
+  const handleFormFailure = (error = 'Network Error') => {
+    toast.dispatchNotification(error, toast.ERROR_TOAST);
+  };
+  const handleFormSuccess = () => {
+    toast.dispatchNotification('Success', toast.SUCCESS_TOAST);
+  };
+  const handleSubmit = async () => {
+    try {
+      const response = await apiRequest('POST', '/request-analysis', {
+        email, firstName, lastName, username: actualName, url,
+      });
+      if (response.success) {
+        handleFormSuccess();
+        setAppData(response.data);
+        setSubmitted(true);
+      } else {
+        handleFormFailure(response.error);
+      }
+    } catch (error) {
+      handleFormFailure();
+    }
+  };
 
   const handleLinkOpen = () => {
     const resp = confirm(`This will open ${link} in a new window, continue?`);

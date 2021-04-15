@@ -20,6 +20,7 @@ async function captureUser(params) {
 }
 
 async function createAnalysis(appId, params, analysis = null) {
+  let userAnalysis;
   try {
     if (analysis === null) {
       // eslint-disable-next-line no-param-reassign
@@ -27,15 +28,16 @@ async function createAnalysis(appId, params, analysis = null) {
     }
     const userId = await captureUser(params);
     // eslint-disable-next-line no-unused-expressions
-    await UserAnalysis.findOne(
+    userAnalysis = await UserAnalysis.findOne(
       { userId, analysisId: analysis.id },
-    ) || UserAnalysis.create(
+    ) || await UserAnalysis.create(
       { userId, analysisId: analysis.id },
     );
   } catch (error) {
     // Ignorable error
   }
   jobManager.enqueueJob(appId);
+  return { userAnalysis, analysis };
 }
 
 async function createApp(appId, params) {
@@ -50,8 +52,8 @@ async function createApp(appId, params) {
     ratings: application.averageUserRating,
     link: application.trackViewUrl,
   });
-  const analysis = await createAnalysis(appId, params);
-  return { app, analysis };
+  const analysisData = await createAnalysis(appId, params);
+  return { app, ...analysisData };
 }
 
 function getAppId(parans) {
@@ -94,11 +96,11 @@ async function requestAnalysis(req, res) {
     }
   } else {
     const analysis = await Analysis.findOne({ appId });
-    await createAnalysis(appId, params, analysis);
+    const analysisData = await createAnalysis(appId, params, analysis);
     const { isFinished } = analysis;
     const data = {
       app: appObject,
-      analysis,
+      ...analysisData,
     };
 
     if (isFinished) {
