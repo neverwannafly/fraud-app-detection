@@ -129,7 +129,7 @@ function RequestAnalysis({ isOpen, onClose, appUrl }) {
         <div className="form-input no-margin">
           {isMobile ? nameFields() : (
             <div className="form-group">
-              <nameFields shouldSpace={false} />
+              {nameFields(false)}
             </div>
           )}
           <div className="form-input">
