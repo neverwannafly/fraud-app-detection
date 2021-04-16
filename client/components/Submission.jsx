@@ -8,7 +8,6 @@ import Card from './Card';
 
 function Submission({ appData }) {
   const { app, analysis } = appData;
-  console.log(appData);
   const dispatch = useDispatch();
 
   useEffect(() => {

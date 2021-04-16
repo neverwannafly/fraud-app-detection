@@ -59,8 +59,6 @@ function DiscoverPage() {
       currentUserAnalysis,
     } = data;
 
-    console.log(data);
-
     if (apps) {
       return (
         <>
@@ -142,6 +140,7 @@ function DiscoverPage() {
       <Navbar
         canGoBack
         canSearch
+        defaultSearchValue={query}
         onSearch={handleSearch}
       />
       <div className="discover__box sr-container">
