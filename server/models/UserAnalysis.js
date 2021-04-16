@@ -7,6 +7,10 @@ const userAnalysisSchema = new Schema({
   analysisId: {
     type: Schema.Types.ObjectId, ref: 'Analysis',
   },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 export default model('UserAnalysis', userAnalysisSchema);

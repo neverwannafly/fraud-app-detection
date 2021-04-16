@@ -19,7 +19,8 @@ async function discover(req, res) {
     $match: {
       name: { $regex: query, $options: 'i' },
     },
-  }]);
+  }]).sort({ _id: -1 });
+
   const analyses = await Analysis.find({ appId: { $in: apps.map((app) => app.appId) } });
   const userAnalysis = await UserAnalysis.aggregate([
     {
