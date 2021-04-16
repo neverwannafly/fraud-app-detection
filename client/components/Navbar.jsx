@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar({ canGoBack, canSearch, onSearch }) {
+function Navbar({
+  canGoBack, canSearch, onSearch, defaultSearchValue,
+}) {
   const classes = useStyles();
   const isMobile = useMobile();
 
@@ -93,6 +95,7 @@ function Navbar({ canGoBack, canSearch, onSearch }) {
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              defaultValue={defaultSearchValue}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
@@ -107,12 +110,14 @@ Navbar.propTypes = {
   canGoBack: PropTypes.bool,
   canSearch: PropTypes.bool,
   onSearch: PropTypes.func,
+  defaultSearchValue: PropTypes.string,
 };
 
 Navbar.defaultProps = {
   canGoBack: false,
   canSearch: false,
   onSearch: () => {},
+  defaultSearchValue: '',
 };
 
 export default Navbar;

@@ -24,8 +24,16 @@ function DiscoverPage() {
   const dispatch = useDispatch();
 
   const [isOpen, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const [url, setUrl] = useState('');
+
+  const handleOpen = useCallback((link = '') => () => {
+    setOpen(true);
+    setUrl(link);
+  }, []);
+  const handleClose = useCallback(() => {
+    setOpen(false);
+    setUrl('');
+  }, []);
 
   useEffect(() => {
     dispatch(loadApplications({ username }));
@@ -75,6 +83,7 @@ function DiscoverPage() {
                 analysis={appAnalysis}
                 requestCount={appUserAnalysis.length > 0 && appUserAnalysis[0].count}
                 isRequestedByClient={appCurrentUserAnalysis.length > 0}
+                onOpen={handleOpen(app.link)}
               />
             );
           })}
@@ -117,7 +126,7 @@ function DiscoverPage() {
           <Fab
             color="primary"
             aria-label="add"
-            onClick={handleOpen}
+            onClick={handleOpen()}
           >
             <AddIcon />
           </Fab>
@@ -131,6 +140,7 @@ function DiscoverPage() {
       <Navbar
         canGoBack
         canSearch
+        defaultSearchValue={query}
         onSearch={handleSearch}
       />
       <div className="discover__box sr-container">
@@ -139,6 +149,7 @@ function DiscoverPage() {
       <RequestAnalysis
         isOpen={isOpen}
         onClose={handleClose}
+        appUrl={url}
       />
     </div>
   );

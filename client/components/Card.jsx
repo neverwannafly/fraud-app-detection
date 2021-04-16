@@ -4,6 +4,7 @@
 
 import React from 'react';
 import PropTypes from 'prop-types';
+
 import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 
@@ -15,6 +16,7 @@ function Card({
   requestCount,
   isRequestedByClient,
   isFlat,
+  onOpen,
 }) {
   const {
     image, name, genres, link, appId,
@@ -58,6 +60,7 @@ function Card({
       <Button
         variant="contained"
         color="primary"
+        onClick={onOpen}
       >
         Request Analysis
       </Button>
@@ -118,12 +121,14 @@ Card.propTypes = {
   requestCount: PropTypes.number,
   isRequestedByClient: PropTypes.bool,
   isFlat: PropTypes.bool,
+  onOpen: PropTypes.func,
 };
 
 Card.defaultProps = {
   requestCount: null,
   isRequestedByClient: true,
   isFlat: true,
+  onOpen: () => {},
 };
 
 export default Card;

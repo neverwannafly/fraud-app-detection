@@ -8,11 +8,12 @@ import TextField from '@material-ui/core/TextField';
 import {
   toast, apiRequest, validators,
 } from '@app/utils';
+import { useMobile } from '@app/hooks';
 import { changeUserData, loadUserData } from '@app/store/user';
 import Modal from './Modal';
-import Card from './Card';
+import Submission from './Submission';
 
-function RequestAnalysis({ isOpen, onClose }) {
+function RequestAnalysis({ isOpen, onClose, appUrl }) {
   const {
     actualName,
     email,
@@ -21,13 +22,18 @@ function RequestAnalysis({ isOpen, onClose }) {
   } = useSelector((state) => state.users, shallowEqual);
   const dispatch = useDispatch();
 
+  const [url, setUrl] = useState(appUrl);
+  const [appData, setAppData] = useState({});
+  const [isSubmitted, setSubmitted] = useState(false);
+  const isMobile = useMobile();
+
   useEffect(() => {
     dispatch(loadUserData());
   }, []);
 
-  const [url, setUrl] = useState('');
-  const [appData, setAppData] = useState({});
-  const [isSubmitted, setSubmitted] = useState(false);
+  useEffect(() => {
+    setUrl(appUrl);
+  }, [appUrl]);
 
   const handleModalClose = () => {
     onClose();
@@ -45,7 +51,9 @@ function RequestAnalysis({ isOpen, onClose }) {
   const handleFormSuccess = () => {
     toast.dispatchNotification('Success', toast.SUCCESS_TOAST);
   };
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
     try {
       const response = await apiRequest('POST', '/request-analysis', {
         email, firstName, lastName, username: actualName, url,
@@ -63,15 +71,10 @@ function RequestAnalysis({ isOpen, onClose }) {
   };
 
   function formUi() {
-    return (
-      <form className="form-control" noValidate autoComplete="off">
-        <div className="form-header">
-          <h2>
-            Submit an Analysis Request
-          </h2>
-        </div>
-        <div className="form-input no-margin">
-          <div className="form-group">
+    const nameFields = (shouldSpace = true) => {
+      if (!shouldSpace) {
+        return (
+          <>
             <TextField
               required
               error={!validators.isStringValid(firstName)}
@@ -88,7 +91,47 @@ function RequestAnalysis({ isOpen, onClose }) {
               defaultValue={lastName}
               onChange={handleChange('lastName')}
             />
+          </>
+        );
+      }
+      return (
+        <>
+          <div className="form-input">
+            <TextField
+              required
+              error={!validators.isStringValid(firstName)}
+              label="First Name"
+              variant="filled"
+              defaultValue={firstName}
+              onChange={handleChange('firstName')}
+            />
           </div>
+          <div className="form-input">
+            <TextField
+              required
+              error={!validators.isStringValid(lastName)}
+              label="Last Name"
+              variant="filled"
+              defaultValue={lastName}
+              onChange={handleChange('lastName')}
+            />
+          </div>
+        </>
+      );
+    };
+    return (
+      <form className="form-control" noValidate autoComplete="off">
+        <div className="form-header">
+          <h2>
+            Submit an Analysis Request
+          </h2>
+        </div>
+        <div className="form-input no-margin">
+          {isMobile ? nameFields() : (
+            <div className="form-group">
+              <nameFields shouldSpace={false} />
+            </div>
+          )}
           <div className="form-input">
             <TextField
               required
@@ -104,6 +147,7 @@ function RequestAnalysis({ isOpen, onClose }) {
               required
               label="App link"
               variant="filled"
+              defaultValue={url}
               onChange={(e) => setUrl(e.target.value)}
             />
           </div>
@@ -114,6 +158,7 @@ function RequestAnalysis({ isOpen, onClose }) {
             variant="outlined"
             color="primary"
             className="landing__buttons"
+            type="submit"
             onClick={handleSubmit}
           >
             Submit Request
@@ -123,33 +168,12 @@ function RequestAnalysis({ isOpen, onClose }) {
     );
   }
 
-  function submittedUI() {
-    const { app, analysis } = appData;
-    return (
-      <>
-        <div className="form-header">
-          <h2>
-            Your request has been submitted!
-          </h2>
-          <p>
-            We will send you a report by email once your analysis
-            is ready.
-          </p>
-        </div>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-          }}
-        >
-          <Card
-            app={app}
-            analysis={analysis}
-            isFlat={false}
-          />
-        </div>
-      </>
-    );
+  function contentUi() {
+    if (isSubmitted && appData) {
+      return <Submission appData={appData} />;
+    }
+
+    return formUi();
   }
 
   return (
@@ -157,8 +181,7 @@ function RequestAnalysis({ isOpen, onClose }) {
       open={isOpen}
       onClose={handleModalClose}
     >
-      {isSubmitted
-        ? submittedUI() : formUi()}
+      {contentUi()}
     </Modal>
   );
 }
@@ -166,6 +189,11 @@ function RequestAnalysis({ isOpen, onClose }) {
 RequestAnalysis.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  appUrl: PropTypes.string,
+};
+
+RequestAnalysis.defaultProps = {
+  appUrl: '',
 };
 
 export default RequestAnalysis;

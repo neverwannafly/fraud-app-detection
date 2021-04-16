@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import { apiRequest } from '@app/utils';
 
 const initialState = {
@@ -11,6 +12,7 @@ const APPLICATIONS_INIT = 'APPLICATIONS_INIT';
 const APPLICATIONS_LOADED = 'APPLICATIONS_LOADED';
 const APPLICATIONS_ERROR = 'APPLICATIONS_ERROR';
 const APPLICATIONS_QUERY_CHANGED = 'APPLICATIONS_QUERY_CHANGED';
+const APPLICATION_UPDATED = 'APPLICATION_UPDATED';
 
 export function loadApplications(options, forceServer = false) {
   return async (dispatch, getState) => {
@@ -38,6 +40,12 @@ export function changeQuery(value, options) {
   };
 }
 
+export function updateApplication(appData) {
+  return async (dispatch) => {
+    dispatch({ type: APPLICATION_UPDATED, payload: appData });
+  };
+}
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case APPLICATIONS_INIT: return {
@@ -58,6 +66,56 @@ export default function reducer(state = initialState, action) {
       ...state,
       query: action.payload,
     };
+    case APPLICATION_UPDATED: {
+      const {
+        app: newApp,
+        analysis: newAnalysis,
+        userAnalysis: newUserAnalysis,
+      } = action.payload;
+
+      const {
+        apps,
+        analyses,
+        userAnalysis,
+        currentUserAnalysis,
+      } = state.data;
+      const newState = { ...state.data };
+
+      const appIndex = apps.findIndex((app) => app.appId === newApp.appId);
+      if (appIndex === -1) {
+        newState.apps = [newApp, ...newState.apps];
+      } else {
+        newState.apps[appIndex] = newApp;
+      }
+
+      const analysisIndex = analyses.findIndex((analysis) => analysis._id === newAnalysis._id);
+      if (analysisIndex === -1) {
+        newState.analyses = [newAnalysis, ...newState.analyses];
+      } else {
+        newState.analyses[analysisIndex] = newAnalysis;
+      }
+
+      const currentUserAnalysisIndex = currentUserAnalysis.findIndex(
+        (cua) => cua._id === newUserAnalysis._id,
+      );
+      if (currentUserAnalysisIndex === -1) {
+        newState.currentUserAnalysis = [newUserAnalysis, ...newState.currentUserAnalysis];
+        const userAnalysisIndex = userAnalysis.findIndex(
+          (ua) => ua._id === newUserAnalysis.analysisId,
+        );
+        if (userAnalysisIndex === -1) {
+          newState.userAnalysis = [
+            { _id: newUserAnalysis.analysisId, count: 1 }, ...newState.userAnalysis,
+          ];
+        } else {
+          newState.userAnalysis[userAnalysisIndex].count += 1;
+        }
+      } else {
+        newState.currentUserAnalysis[currentUserAnalysisIndex] = newUserAnalysis;
+      }
+
+      return { ...state, data: newState };
+    }
     default:
       return state;
   }
