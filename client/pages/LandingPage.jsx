@@ -46,7 +46,7 @@ function LandingPage() {
             <p>
               &nbsp;
               <span className="underline bold">
-                deMysity
+                deMysify
               </span>
               &nbsp;is a step in the direction to help people detect fradulent
               applications ahead of time so they can safeguard their confidential
