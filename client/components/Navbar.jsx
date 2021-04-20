@@ -58,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Navbar({
-  canGoBack, canSearch, onSearch, defaultSearchValue,
+  canGoBack, canSearch, onSearch, defaultSearchValue, goBackUrl,
 }) {
   const classes = useStyles();
   const isMobile = useMobile();
@@ -66,7 +66,7 @@ function Navbar({
   const {
     displayName, iconPath,
   } = useSelector((state) => state.users, shallowEqual);
-  const handleBackClick = () => history.push('');
+  const handleBackClick = () => history.push(goBackUrl);
 
   return (
     <AppBar position="sticky">
@@ -111,9 +111,11 @@ Navbar.propTypes = {
   canSearch: PropTypes.bool,
   onSearch: PropTypes.func,
   defaultSearchValue: PropTypes.string,
+  goBackUrl: PropTypes.string,
 };
 
 Navbar.defaultProps = {
+  goBackUrl: '',
   canGoBack: false,
   canSearch: false,
   onSearch: () => {},

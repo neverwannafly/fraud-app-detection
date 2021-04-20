@@ -7,6 +7,7 @@ import { Provider } from 'react-redux';
 import { toast } from '@app/utils';
 
 import history from './history';
+import ApplicationPage from './pages/ApplicationPage';
 import LandingPage from './pages/LandingPage';
 import DiscoverPage from './pages/DiscoverPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -26,6 +27,11 @@ const App = () => (
             component={DiscoverPage}
             exact
             path="/discover"
+          />
+          <Route
+            component={ApplicationPage}
+            exact
+            path="/app/:appId"
           />
           <Route
             component={NotFoundPage}
