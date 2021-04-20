@@ -29,6 +29,11 @@ class JobManager {
       'analyseApplication',
       [appId],
     );
+    this.queue.enqueue(
+      'default',
+      'performSentimentAnalysis',
+      [appId],
+    );
   }
 
   async _initialize() {

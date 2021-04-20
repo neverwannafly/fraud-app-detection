@@ -66,8 +66,8 @@ def generate_report(app_id):
       labels.append("Excellent")
 
   return {
-    'good_reviews': sorted_analysed_reviews[0:10],
-    'bad_reviews': sorted_analysed_reviews[-10:],
+    'good_reviews': json.dumps(sorted_analysed_reviews[0:10]),
+    'bad_reviews': json.dumps(sorted_analysed_reviews[-10:]),
     'verdict': Counter(labels).most_common(1)[0][0],
   }
 

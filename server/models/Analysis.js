@@ -8,7 +8,6 @@ const analysisSchema = new Schema({
   },
   analysisReports: {
     type: Map,
-    of: String,
     default: {},
   },
   lastRequested: {
