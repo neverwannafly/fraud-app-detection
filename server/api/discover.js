@@ -6,7 +6,6 @@ import { hasParams, decorateRoute } from '../utils';
 async function discover(req, res) {
   const params = req.query;
 
-  await new Promise((resolve) => setTimeout(() => resolve(), 2000));
   if (!hasParams(params, ['username'])) {
     res.send({ success: false, error: 'Bad request' });
     return;
