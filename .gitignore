@@ -5,3 +5,5 @@ yarn-error.log
 dump.rdb
 env
 .env
+.vscode
+service/__pycache__
