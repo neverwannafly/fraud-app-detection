@@ -1,0 +1,42 @@
+.discover {
+  &__box {
+    display: flex;
+    flex-direction: row;
+    padding: 2rem;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__loader {
+    height: 100%;
+  }
+
+  &__error {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  &__fab {
+    left: 100%;
+    bottom: 50%;
+    transform: translate(-150%, 50%);
+    position: fixed;
+
+    @include tablet {
+      bottom: 0%;
+      transform: translate(-150%, -50%);
+    }
+  }
+}

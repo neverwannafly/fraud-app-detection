@@ -19,6 +19,10 @@ const appSchema = new Schema({
     enum: appTypes,
     default: appTypes.iOS,
   },
+  createdAt: {
+    type: Date,
+    default: new Date(),
+  },
 });
 
 const appModel = model('App', appSchema);

@@ -57,7 +57,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Navbar({ canGoBack }) {
+function Navbar({
+  canGoBack, canSearch, onSearch, defaultSearchValue,
+}) {
   const classes = useStyles();
   const isMobile = useMobile();
 
@@ -75,21 +77,25 @@ function Navbar({ canGoBack }) {
             className="pointer m-r-10"
           />
         )}
-        <Typography style={{ flexGrow: 1 }} variant="h6">
-          Hi&nbsp;
-          {displayName}
-        </Typography>
-        {!isMobile && (
+        {(!canSearch || !isMobile) && (
+          <Typography style={{ flexGrow: 1 }} variant="h6">
+            Hi&nbsp;
+            {displayName}
+          </Typography>
+        )}
+        {canSearch && (
           <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
             <InputBase
+              onChange={onSearch}
               placeholder="Look for Apps..."
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
               }}
+              defaultValue={defaultSearchValue}
               inputProps={{ 'aria-label': 'search' }}
             />
           </div>
@@ -102,10 +108,16 @@ function Navbar({ canGoBack }) {
 
 Navbar.propTypes = {
   canGoBack: PropTypes.bool,
+  canSearch: PropTypes.bool,
+  onSearch: PropTypes.func,
+  defaultSearchValue: PropTypes.string,
 };
 
 Navbar.defaultProps = {
   canGoBack: false,
+  canSearch: false,
+  onSearch: () => {},
+  defaultSearchValue: '',
 };
 
 export default Navbar;

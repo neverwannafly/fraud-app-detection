@@ -23,9 +23,12 @@ export default {
         });
       }
 
-      Review.insertMany(reviewObjects, (err) => {
-        if (err) jobStatus = false;
-      });
+      try {
+        await Review.insertMany(reviewObjects, { ordered: false });
+      } catch (err) {
+        jobStatus = false;
+        // Ignore error
+      }
 
       return jobStatus;
     },
