@@ -1,6 +1,11 @@
 
 # coding: utf-8
 
+<<<<<<< HEAD
+=======
+# In[2]:
+
+>>>>>>> 9571ece0e7369800f7fa8e62962a0f50998fc8bf
 import re
 import time
 from bs4 import BeautifulSoup
@@ -14,7 +19,13 @@ import pprint
 
 # @author Vishal Pal <vishalpal1999@gmail.com>
 
+<<<<<<< HEAD
 no_of_reviews = 200
+=======
+# Modify it according to your requirements
+
+no_of_reviews = 1000
+>>>>>>> 9571ece0e7369800f7fa8e62962a0f50998fc8bf
 
 non_bmp_map = dict.fromkeys(range(0x10000, sys.maxunicode + 1), 0xfffd)
 driver = webdriver.Chrome(r"E:\google-play-crawler\chromedriver.exe")
@@ -35,6 +46,7 @@ def get_reviews(app_id, page=1) -> typing.List[dict]:
 
     expatistan_table = soup_expatistan.find("h1", class_="AHFaub")
 
+<<<<<<< HEAD
     #print("App Name: ", expatistan_table.string)
     expand_pages = soup_expatistan.findAll("div", class_="d15Mdf")
     
@@ -45,14 +57,37 @@ def get_reviews(app_id, page=1) -> typing.List[dict]:
         # try:
         title = None
         author = expand_page.findAll("span", class_="X43Kjb")[0].text
+=======
+    print("App Name: ", expatistan_table.string)
+    expand_pages = soup_expatistan.findAll("div", class_="d15Mdf")
+    # print(expand_pages)
+
+    counter = 1
+    for expand_page in expand_pages:
+        #expand_page = expand_page.encode(sys.stdout.encoding, errors='replace')
+        #expand_page = expand_page.decode("utf-8")
+
+        # try:
+        title = None
+        author = expand_page.findAll("span", class_="X43Kjb")[0].text.encode(sys.stdout.encoding, errors='replace')
+        author = author.decode("latin1")
+        # print("Review Date: ", expand_page.findAll("span", class_="p2TkOb")[0].text.encode(sys.stdout.encoding, errors='replace').decode("utf-8"))
+>>>>>>> 9571ece0e7369800f7fa8e62962a0f50998fc8bf
         rating = expand_page.find("div", class_="pf5lIe").find_next()['aria-label'];
         rating = rating.split('(')[0]
         rating = ''.join(x for x in rating if x.isdigit())
         rating = int(rating)
+<<<<<<< HEAD
         content=str(expand_page.findAll("div", class_="UD7Dzf")[0].text)
         string = author+app_id+content
         reviewId = hash(string+str(len(string)))%1000000007
         voteCount=int(expand_page.findAll("div", class_="jUL89d y92BAb")[0].text)
+=======
+        content=str(expand_page.findAll("div", class_="UD7Dzf")[0].text.encode(sys.stdout.encoding, errors='replace').decode("latin1"))
+        string = author+app_id+content
+        reviewId = hash(string+str(len(string)))
+        voteCount=int(expand_page.findAll("div", class_="jUL89d y92BAb")[0].text.encode(sys.stdout.encoding, errors='replace').decode("latin1"))
+>>>>>>> 9571ece0e7369800f7fa8e62962a0f50998fc8bf
         counter+=1
         if counter % 40 == 0:
             page+=1
@@ -81,9 +116,19 @@ sys.stdout.write(json.dumps({
     "reviews": reviews,
 }))
 
+<<<<<<< HEAD
 #print(len(reviews))
 #pprint.pprint(reviews)
 
+=======
+print(len(reviews))
+pprint.pprint(reviews)
+
+# Append your app store urls here
+# urls = [""]
+
+# for url in urls:
+>>>>>>> 9571ece0e7369800f7fa8e62962a0f50998fc8bf
 
 
 
