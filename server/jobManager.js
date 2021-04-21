@@ -3,6 +3,7 @@
 import {
   Worker, Scheduler, Queue,
 } from 'node-resque';
+import schedule from 'node-schedule';
 
 import jobs from './jobs';
 import { workerConnectionDetails } from './constants';
@@ -18,6 +19,7 @@ class JobManager {
     this.scheduler = new Scheduler(this.connection);
     this.queue = new Queue(this.connection, jobs);
 
+    this._initscheduledJobs();
     this._initLogging();
     this._initialize();
   }
@@ -27,6 +29,11 @@ class JobManager {
     this.queue.enqueue(
       'default',
       'analyseApplication',
+      [appId],
+    );
+    this.queue.enqueue(
+      'default',
+      'performSentimentAnalysis',
       [appId],
     );
   }
@@ -55,6 +62,17 @@ class JobManager {
   async _afterFinish() {
     this.pendingJobs -= 1;
     this._tryShutdown();
+  }
+
+  _initscheduledJobs() {
+    schedule.scheduleJob('*/2 * * * *', async () => {
+      if (this.scheduler.leader) {
+        this.queue.enqueue(
+          'default',
+          'analyseAll',
+        );
+      }
+    });
   }
 
   _initLogging() {

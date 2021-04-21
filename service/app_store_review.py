@@ -2,7 +2,6 @@ import json
 import time
 import typing
 import sys
-import pprint
 
 import requests
 

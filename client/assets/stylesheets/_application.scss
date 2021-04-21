@@ -1,0 +1,147 @@
+.application {
+  &__container {
+    @include box-shadow;
+
+    margin: 2rem 1rem;
+    border-radius: $border-radius-sm;
+    background-color: $light-background-color;
+    padding: 2rem;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+
+  &__verdict {
+    margin-bottom: 2rem;
+  }
+
+  &__head {
+    display: flex;
+    flex-direction: row;
+
+    @include mobile {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+
+    @include mobile {
+      margin-left: 0rem;
+    }
+  }
+
+  &__title {
+    font-size: 2rem;
+    font-weight: bolder;
+
+    @include mobile {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-top: 1rem;
+    }
+  }
+
+  &__sub-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #808080;
+
+    @include mobile {
+      font-size: 1rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  &__rating {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 1rem 0;
+
+    @include mobile {
+      justify-content: center;
+    }
+  }
+
+  &__rating-count {
+    margin-left: 0.5rem;
+  }
+
+  &__icon {
+    display: table;
+    height: 14rem!important;
+    width: 14rem!important;
+    border-radius: $border-radius-bg;
+
+    @include tablet {
+      height: 10rem!important;
+      width: 10rem!important;
+    }
+
+    @include mobile {
+      height: 6rem!important;
+      width: 6rem!important;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: $border-radius-bg;
+    }
+  }
+
+  &__chips-container {
+    display: flex;
+    flex-wrap: wrap;
+
+    @include mobile {
+      justify-content: center;
+    }
+  }
+
+  &__chip {
+    margin: 0.2rem;
+  }
+
+  &__break {
+    background: $card-bg;
+    margin-top: 0.75rem;
+    border-radius: $border-radius-sm;
+    height: 0.25rem;
+  }
+
+  &__review-container {
+    background-color: white;
+    border-radius: $border-radius-sm;
+    margin: 2rem auto;
+    padding: 0.5rem;
+    height: 300px;
+    width: 250px;
+  }
+
+  &__review-content {
+    padding: 0.25rem;
+    width: 250px;
+    height: 150px;
+    overflow: scroll;
+  }
+}
+
+.splide__arrow {
+  @include mobile {
+    top: 100%!important;
+    transform: translateY(-70%)!important;
+  }
+}
+
+.splide__pagination {
+  bottom: 0rem!important;
+}

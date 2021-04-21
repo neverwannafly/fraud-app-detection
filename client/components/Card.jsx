@@ -76,7 +76,7 @@ function Card({
           </div>
           <div className="card__right">
             <h3 style={{ margin: '0', marginBotton: '1rem' }}>{name}</h3>
-            <div className="card__chips">
+            <div className="card__chips-container">
               {genres.map((genre, idx) => (
                 <Chip
                   // eslint-disable-next-line react/no-array-index-key

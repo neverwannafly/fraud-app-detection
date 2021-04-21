@@ -6,7 +6,6 @@ import { hasParams, decorateRoute } from '../utils';
 async function discover(req, res) {
   const params = req.query;
 
-  await new Promise((resolve) => setTimeout(() => resolve(), 2000));
   if (!hasParams(params, ['username'])) {
     res.send({ success: false, error: 'Bad request' });
     return;
@@ -21,7 +20,9 @@ async function discover(req, res) {
     },
   }]).sort({ _id: -1 });
 
-  const analyses = await Analysis.find({ appId: { $in: apps.map((app) => app.appId) } });
+  const analyses = await Analysis
+    .find({ appId: { $in: apps.map((app) => app.appId) } })
+    .select(['appId', 'isFinished', '_id']);
   const userAnalysis = await UserAnalysis.aggregate([
     {
       $group: {

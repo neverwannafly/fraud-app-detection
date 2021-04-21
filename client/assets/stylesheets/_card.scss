@@ -4,8 +4,8 @@ $card-bg: #e0e0e0;
   @include box-shadow;
 
   border-radius: $border-radius;
-  border: 0.2rem solid white;
-  background-color: white;
+  border: 0.2rem solid $light-background-color;
+  background-color: $light-background-color;
   padding: 1rem;
   margin: 0.75rem;
   max-width: 18rem;
@@ -69,9 +69,9 @@ $card-bg: #e0e0e0;
   }
 
   &__chips-container {
+    margin-top: 0.5rem;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
   }
 
   &__chip {

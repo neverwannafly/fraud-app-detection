@@ -19,6 +19,7 @@ export function loadApplications(options, forceServer = false) {
     const { data, query } = getState().applications;
     if (!Object.keys(data).length || forceServer) {
       dispatch({ type: APPLICATIONS_INIT });
+      await new Promise((resolve) => setTimeout(() => resolve(), 2000));
       try {
         const json = await apiRequest('GET', '/discover-apps', { query, ...options });
         if (json.success) {
