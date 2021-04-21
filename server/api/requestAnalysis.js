@@ -36,8 +36,11 @@ async function createAnalysis(appId, params, analysis = null) {
   } catch (error) {
     // Ignorable error
   }
+
+  const { _id, isFinished } = analysis;
   jobManager.enqueueJob(appId);
-  return { userAnalysis, analysis };
+
+  return { userAnalysis, analysis: { _id, isFinished, appId } };
 }
 
 async function createApp(appId, params) {
@@ -97,6 +100,7 @@ async function requestAnalysis(req, res) {
   } else {
     const analysis = await Analysis.findOne({ appId });
     const analysisData = await createAnalysis(appId, params, analysis);
+
     const { isFinished } = analysis;
     const data = {
       app: appObject,

@@ -20,7 +20,9 @@ async function discover(req, res) {
     },
   }]).sort({ _id: -1 });
 
-  const analyses = await Analysis.find({ appId: { $in: apps.map((app) => app.appId) } });
+  const analyses = await Analysis
+    .find({ appId: { $in: apps.map((app) => app.appId) } })
+    .select(['appId', 'isFinished', '_id']);
   const userAnalysis = await UserAnalysis.aggregate([
     {
       $group: {

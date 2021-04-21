@@ -1,15 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, shallowEqual, useDispatch } from 'react-redux';
-import Button from '@material-ui/core/Button';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 
 import { loadApplications, changeQuery } from '@app/store/application';
 import {
   Navbar,
-  Loader,
   Card,
   RequestAnalysis,
+  AsyncContent,
 } from '@app/components';
 import { debounce } from '@app/utils';
 
@@ -95,30 +94,12 @@ function DiscoverPage() {
   }
 
   function contentUi() {
-    if (isLoading) {
-      return (
-        <div className="discover__loader">
-          <Loader />
-        </div>
-      );
-    }
-    if (error) {
-      return (
-        <div className="discover__error">
-          <h3>Failed to load data</h3>
-          <Button
-            onClick={handleRetry}
-            variant="contained"
-            color="primary"
-          >
-            Try Again
-          </Button>
-        </div>
-      );
-    }
-
     return (
-      <>
+      <AsyncContent
+        isLoading={isLoading}
+        onRetry={handleRetry}
+        error={error}
+      >
         <div className="discover__content">
           {cardUi()}
         </div>
@@ -131,7 +112,7 @@ function DiscoverPage() {
             <AddIcon />
           </Fab>
         </div>
-      </>
+      </AsyncContent>
     );
   }
 
