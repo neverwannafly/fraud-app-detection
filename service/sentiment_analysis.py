@@ -35,13 +35,15 @@ def generate_report(app_id):
     if review.get('content'):
       score_c = sia.polarity_scores(normalize(review['content']))
 
-    title_coeff = 0.35
-    content_coeff = 0.65
+    title_coeff = 0.05
+    content_coeff = 0.95
 
     merged_score = {}
 
     for key in score_c:
       merged_score[key] = title_coeff * float(score_t[key]) + content_coeff * float(score_c[key])
+
+    merged_score['compound'] = (merged_score['compound'] + review.get('rating', 2.5) - 2.5) * min(review.get('voteCount', 1), 1)
 
     return merged_score
 
@@ -56,18 +58,18 @@ def generate_report(app_id):
     compound = list(sar.values())[0]['compound']
     if (compound <= -0.5):
       labels.append("Terrible")
-    elif (compound < -0.05 and compound > -0.5):
+    elif (-0.5 < compound < -0.05):
       labels.append("Bad")
-    elif (compound <= -0.05 and compound >= 0.05):
+    elif (- 0.05 < compound < 0.05):
       labels.append("Satisfactory")
-    elif (compound > 0.05 and compound < 0.5):
+    elif (0.05 < compound < 0.5):
       labels.append("Good")
     elif (compound >= 0.5):
       labels.append("Excellent")
 
   return {
-    'good_reviews': json.dumps(sorted_analysed_reviews[0:10]),
-    'bad_reviews': json.dumps(sorted_analysed_reviews[-10:]),
+    'bad_reviews': json.dumps(sorted_analysed_reviews[0:10]),
+    'good_reviews': json.dumps(sorted_analysed_reviews[-10:]),
     'verdict': Counter(labels).most_common(1)[0][0],
   }
 

@@ -39,7 +39,7 @@ AsyncContent.propTypes = {
   isLoading: PropTypes.bool.isRequired,
   // eslint-disable-next-line react/forbid-prop-types
   error: PropTypes.any,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   onRetry: PropTypes.func.isRequired,
 };
 

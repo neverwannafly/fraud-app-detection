@@ -14,7 +14,7 @@ const CURRENT_APP_ERROR = 'CURRENT_APP_ERROR';
 
 export function loadApplication(options, forceServer = false) {
   return async (dispatch, getState) => {
-    const { currentAppId } = getState().applications;
+    const { currentAppId } = getState().currentApplication;
     const { appId } = options;
     if (currentAppId !== appId || forceServer) {
       dispatch({ type: CURRENT_APP_INIT, payload: appId });
