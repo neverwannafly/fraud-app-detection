@@ -55,15 +55,31 @@ function RequestAnalysis({ isOpen, onClose, appUrl }) {
     e.preventDefault();
     e.stopPropagation();
     try {
-      const response = await apiRequest('POST', '/request-analysis', {
-        email, firstName, lastName, username: actualName, url,
-      });
-      if (response.success) {
-        handleFormSuccess();
-        setAppData(response.data);
-        setSubmitted(true);
-      } else {
-        handleFormFailure(response.error);
+      const urlValid = validators.isUrlValid(url);
+      if(urlValid===0){
+        const response = await apiRequest('POST', '/request-analysis', {
+          email, firstName, lastName, username: actualName, url,
+        });
+        if (response.success) {
+          handleFormSuccess();
+          setAppData(response.data);
+          setSubmitted(true);
+        } else {
+          handleFormFailure(response.error);
+        }
+      } else if(urlValid===1){
+        const response = await apiRequest('POST', '/request-analysis-play', {
+          email, firstName, lastName, username: actualName, url,
+        });
+        if (response.success) {
+          handleFormSuccess();
+          setAppData(response.data);
+          setSubmitted(true);
+        } else {
+          handleFormFailure(response.error);
+        }
+      } else{
+        handleFormFailure('Invalid URL!');
       }
     } catch (error) {
       handleFormFailure();
@@ -145,6 +161,7 @@ function RequestAnalysis({ isOpen, onClose, appUrl }) {
           <div className="form-input">
             <TextField
               required
+              error = {validators.isUrlValid(url)===-1}
               label="App link"
               variant="filled"
               defaultValue={url}

@@ -8,4 +8,22 @@ export default {
     const stringRegExp = /^\w*$/;
     return stringRegExp.test(string);
   },
+  isUrlValid: (string) => {
+    const urlRegExp = 'https:..(....)';
+    const found = string.match(urlRegExp);
+    if(found==null){
+      return -1;
+    }
+    if (found.length!=2) {
+      return -1;
+    }
+    if (found[1]==='play') {
+      console.log("play-store");
+      return 1;
+    } else if (found[1]==='apps') {
+      console.log("ios-store");
+      return 0;
+    }
+    return -1;
+  },
 };

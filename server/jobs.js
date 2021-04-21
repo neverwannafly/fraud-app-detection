@@ -9,7 +9,12 @@ export default {
       JobLock: { reEnqueue: true },
     },
     perform: async (appId) => {
-      const response = await callPythonScript('app_store_review.py', [appId]);
+      let response;
+      if(appId[0]!='c'){
+        response = await callPythonScript('app_store_review.py', [appId]);
+      }else{
+        response = await callPythonScript('play_store_review.py', [appId]);
+      }
       const { success, reviews } = response;
       let jobStatus = true;
       const reviewObjects = [];
