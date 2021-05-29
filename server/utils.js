@@ -34,7 +34,7 @@ export async function callPythonScript(scriptName, args = []) {
 
     const script = directory + scriptName;
     const pyArgs = [script, ...args];
-    const pyprog = spawn('python', pyArgs);
+    const pyprog = spawn('python3', pyArgs);
 
     let result = '';
     let resultError = '';

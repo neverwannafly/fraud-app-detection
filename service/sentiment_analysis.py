@@ -43,7 +43,7 @@ def generate_report(app_id):
     for key in score_c:
       merged_score[key] = title_coeff * float(score_t[key]) + content_coeff * float(score_c[key])
 
-    merged_score['compound'] = (merged_score['compound'] + review.get('rating', 2.5) - 2.5) * min(review.get('voteCount', 1), 1)
+    merged_score['compound'] = (merged_score['compound'])
 
     return merged_score
 
